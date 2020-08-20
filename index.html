@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Column Chart Viz</title>
+    <style>
+      body {
+        margin: 0;
+        font-size: 14px;
+        background-color: grey;
+      }
+      .charts {
+        margin: 0 24px;
+      }
+
+      .chart {
+        background-color: white;
+        width: 400px;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="stacked-bar-chart-viz.css" />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="stacked-bar-chart-viz.js"></script>
+  </head>
+
+  <body>
+    <div class="charts">
+      <div class="chart"></div>
+      <div class="chart"></div>
+      <div class="chart"></div>
+    </div>
+
+    <script>
+     d3.json("sample.json").then(function(data) {
+       data.forEach(function(v) {
+        v["Value"] = +v["Value"]
+        v["Fake"] = Math.round(v['Value']*10/2)/10
+       })
+
+        stackedBarChartViz({
+        el: document.getElementsByClassName("chart")[1],
+        data,
+        columnBars: "Years",
+        columnGrouping: "Age",
+        columnMeasure0: "Value",
+        columnMeasure1: "Fake",
+        operationMeasure: "sum",
+        paletteFill: "single",
+        positionLegend: "top",
+        sort: "atoz",
+        labelX: "axis-x-label",
+        labelY: "axis-y-label"
+      }); 
+     })
+
+    </script>
+  </body>
+</html>
